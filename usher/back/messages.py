@@ -16,9 +16,9 @@ It conveniently also derives a project
 Less conveniently it raises an exception if there is no project in the key
 
 >>> try:
->>>     Message("ABC", "in progress")
->>> except KeyError:
->>>     print("Fail")
+...     Message("ABC", "in progress")
+... except KeyError:
+...     print("Fail")
 Fail
 
 """
@@ -31,9 +31,9 @@ class Message:
     key: str
     status: str
 
-    def __post__init__(self):
+    def __post_init__(self):
         """Set the project from the key"""
         if "-" in self.key:
-            self.project = key.split("-")[0] if "-" in key else ""
+            self.project = self.key.split("-")[0] if "-" in self.key else ""
         else:
-            raise KeyError(f"No project in issue id: {key}")
+            raise KeyError(f"No project in issue id: {self.key}")
