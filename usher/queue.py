@@ -55,10 +55,14 @@ class UsherQueueTest(UsherQueue):
         """Synchronous wrapper for publish"""
         asyncio.run(self.publish(message))
 
-    def consume_sync(self) -> dict:
-        """Synchronous wrapper for consume"""
+    def _assert_full(self) -> None:
+        """Assert that the queue is has some items"""
         if self.empty():
             raise asyncio.QueueEmpty
+
+    def consume_sync(self) -> dict:
+        """Synchronous wrapper for consume"""
+        self._assert_full()
         return asyncio.run(self.consume())
 
 
