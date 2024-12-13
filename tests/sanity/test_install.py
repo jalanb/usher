@@ -62,4 +62,4 @@ def test_health_check_endpoint(docker_setup):
     """Test the /health endpoint on the server to confirm the service is running."""
     response = httpx.get("http://localhost:8000/health")
     assert response.status_code == 200, f"Health check failed: {response.text}"
-    assert response.json() == {"status": "ok"}, "Health check response is incorrect."
+    assert response.json() == {"status": "ok"}, f"Health check response is incorrect: {response}"

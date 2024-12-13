@@ -26,14 +26,14 @@ async def call_health_check():
                 print(f"Health check response: {response.json()}")
             except Exception as e:
                 print(f"Error calling health check: {e}")
-            sleep_duration = random.randint(1, 10)  # Random sleep between 1 and 10 seconds
-            await asyncio.sleep(sleep_duration)
+            await asyncio.sleep(1)
 
 
 async def main():
     """Run the health check for one minute."""
     start_time = time.time()
-    while time.time() - start_time < 60:  # Run for 1 minute
+    max_calls = random.randint(1, 5)
+    while time.time() - start_time < max_calls:  # Run for 1 minute
         await call_health_check()
 
 
