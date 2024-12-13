@@ -162,6 +162,11 @@ deps = [".[develop]"]
 commands = [
     ["py.test", "--exitfirst", "usher", "tests" ]
 ]
+
+[tool.tox.env.pudb]
+deps = [".[develop]"]
+commands = [
+    ["py.test", "--pudb", "usher", "tests" ]
 ]
 
 [project.scripts]
