@@ -13,4 +13,4 @@ RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir '.[deploys]'
 
 # Set the default command to run the deploys client
-CMD ["python", "-m", "usher.deploys", "--server-url", "http://localhost:8000"]
+CMD ["python", "-m", "usher.front.deploys", "--server-url", "http://localhost:8000"]

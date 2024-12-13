@@ -3,6 +3,6 @@
 Should be able to import the package
 
 ```doctest
->>> from usher import deploys
+>>> from usher.front import deploys
 
 ```

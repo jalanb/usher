@@ -6,7 +6,7 @@ Usher's apps will use a queue of messages
 These messages are stored in an `UsherQueue`, derived from `asyncio.Queue`.
 For this sake of this example we'll use a test class
 
->>> from usher.queue import UsherQueueTest as UsherQueue
+>>> from usher.back.queue import UsherQueueSync as UsherQueue
 >>> queue = UsherQueue()
 
 Once we have the queue we can put messages in it
@@ -45,7 +45,7 @@ class UsherQueue(asyncio.Queue):
         return await self.get()
 
 
-class UsherQueueTest(UsherQueue):
+class UsherQueueSync(UsherQueue):
     """Provide a test class for UsherQueue
 
     Allows synchronous access to the queue for testing
@@ -55,14 +55,14 @@ class UsherQueueTest(UsherQueue):
         """Synchronous wrapper for publish"""
         asyncio.run(self.publish(message))
 
-    def _assert_full(self) -> None:
+    def assert_full(self) -> None:
         """Assert that the queue is has some items"""
         if self.empty():
             raise asyncio.QueueEmpty
 
     def consume_sync(self) -> dict:
         """Synchronous wrapper for consume"""
-        self._assert_full()
+        self.assert_full()
         return asyncio.run(self.consume())
 
 

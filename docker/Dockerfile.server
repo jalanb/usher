@@ -16,4 +16,4 @@ RUN pip install --no-cache-dir --upgrade pip && \
 EXPOSE 8000
 
 # Set the default command to run the server
-CMD ["python", "-m", "usher.server"]
+CMD ["python", "-m", "usher.front.server"]

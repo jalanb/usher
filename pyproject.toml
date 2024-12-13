@@ -170,6 +170,6 @@ commands = [
 ]
 
 [project.scripts]
-kat = "usher.server.__main__:main"
-keys = "usher.tracker.__main__:main"
-imports = "usher.deploys.__main__:main"
+kat = "usher.front.server.__main__:main"
+keys = "usher.front.tracker.__main__:main"
+imports = "usher.front.deploys.__main__:main"

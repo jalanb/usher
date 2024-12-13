@@ -13,4 +13,4 @@ RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir '.[trackers]'
 
 # Set the default command to run the trackers client
-CMD ["python", "-m", "usher.trackers", "--server-url", "http://localhost:8000"]
+CMD ["python", "-m", "usher.front.trackers", "--server-url", "http://localhost:8000"]
