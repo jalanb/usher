@@ -12,14 +12,16 @@ Provide a REST API to allow at least
 import os
 import sys
 
-from fastapi import FastAPI
 import uvicorn
+from fastapi import FastAPI
 
 app = FastAPI()
+
 
 @app.get("/health")
 async def health_check() -> dict[str, str]:
     return {"status": "ok"}
+
 
 def main() -> int:
     uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")

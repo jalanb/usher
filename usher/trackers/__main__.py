@@ -8,22 +8,21 @@ Provide a REST API to add messages to the queue
 """
 
 import asyncio
-import os
 import random
-import sys
 import time
 
 import httpx
 
+
 async def call_health_check():
     """Call the server's health check endpoint.
-    
+
     Temp function to get up and testable
     """
     async with httpx.AsyncClient() as client:
         while True:
             try:
-                response = await client.get("http://usher_server:8000/health")  # Adjust the URL as necessary
+                response = await client.get("http://usher_server:8000/health")
                 print(f"Health check response: {response.json()}")
             except Exception as e:
                 print(f"Error calling health check: {e}")
