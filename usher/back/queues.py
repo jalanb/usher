@@ -6,7 +6,7 @@ Usher's apps will use a queue of messages
 These messages are stored in an `UsherQueue`, derived from `asyncio.Queue`.
 For this sake of this example we'll use a test class
 
->>> from usher.back.queue import UsherQueueSync as UsherQueue
+>>> from usher.back.queues import UsherQueueSync as UsherQueue
 >>> queue = UsherQueue()
 
 Once we have the queue we can put messages in it

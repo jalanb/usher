@@ -1,7 +1,7 @@
 import asyncio
 import unittest
 
-from usher.back.queue import UsherQueueSync as UsherQueue
+from usher.back.queues import UsherQueueSync as UsherQueue
 
 import pytest
 
