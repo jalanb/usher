@@ -1,0 +1,169 @@
+[build-system]
+requires = ["setuptools>=65.5.1", "wheel>=0.29.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "usher"
+version = "0.0.0"   # version is controlled by bumpversion, which rewrites this
+description = "Usher provides a queue between an issue tracker and deployments"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT License"}
+authors = [
+    {name = "jalanb", email = "github@al-got-rhythm.net"}
+]
+classifiers = [
+    "Programming Language :: Python :: 3.11",
+    "Development Status :: 1 - Planning",
+    "Natural Language :: English",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+# Core dependencies
+dependencies = [
+    "pysyte",
+]
+
+[project.optional-dependencies]
+# Extras for server
+server = [
+    "fastapi",
+    "usher",
+    "uvicorn",
+]
+
+# Extras for trackers client
+trackers = [
+    "httpx",
+    "usher",
+]
+
+# Extras for deploys client
+deploys = [
+    "httpx",
+    "usher",
+]
+
+# Linting tools - standalone, no project dependencies needed
+lint = [
+    "black",
+    "blackdoc",
+    "flake8",
+    "flake8-bugbear",
+    "flake8-comprehensions",
+    "flake8-eradicate",
+    "flake8-isort",
+    "Flake8-pyproject",
+    "isort",
+    "mypy",
+]
+
+# Testing needs project + dependencies
+test = [
+    "usher",
+    "callee",
+    "codecov",
+    "coverage",
+    "docker",
+    "httpx",
+    "pytest",
+    "pytest-cov",
+    "pytest-docker",
+    "tox",
+]
+
+# DevOps needs testing capabilities plus deployment tools
+devops = [
+    "usher[test]",
+    "usher[lint]",
+    "bump2version",
+    "build",
+]
+
+# Full development environment
+develop = [
+    "usher[devops]",
+    "httpie",
+    "ipython",
+    "pudb",
+    "pytest-pudb",
+    "pytest-sugar",
+    "sh",
+]
+
+[project.urls]
+Homepage = "https://github.com/jalanb/usher"
+
+[tool.setuptools.package-data]
+# These patterns include doctests, which serve as both documentation and test cases,
+# potentially useful for end users of usher.
+usher = ["**/*.test", "**/*.md"]
+
+[tool.setuptools.packages.find]
+include = ["usher*"]
+exclude = ["test_*.py"]
+
+[tool.flake8]
+# https://black.readthedocs.io/en/stable/compatible_configs.html#flake8
+max-line-length = 88
+ignore = ["E731", "E203", "W503"]
+
+[tool.mypy]
+ignore_missing_imports = true
+install_types = true
+non_interactive = true
+check_untyped_defs = true
+strict_optional = true
+
+[tool.coverage.run]
+branch = true
+parallel = true
+source = ["usher"]
+concurrency = ["thread", "multiprocessing"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+exclude_also = [
+    "if __name__ == \"__main__\":",
+    "raise AssertionError",
+    "raise NotImplementedError",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["test"]
+addopts = "--doctest-modules --doctest-glob=*.test --doctest-glob=*.md" 
+doctest_optionflags = ["ELLIPSIS", "NORMALIZE_WHITESPACE"]
+
+[tool.tox]
+envlist = ["lints", "tests"]
+
+[tool.tox.env.lints]
+deps = [".[lint]"]
+commands = [
+    ["black", "-S", "--check", "usher"],
+    ["blackdoc", "-S", "--include", "[.](md|py|test)", "--check", "usher"],
+    ["flake8", "usher"],
+    ["mypy", "usher"],
+]
+
+[tool.tox.env.tests]
+deps = [".[test]"]
+commands = [
+    ["py.test", "--cov=usher", "tests" ]
+]
+
+[tool.tox.env.devs]
+deps = [".[develop]"]
+commands = [
+    ["py.test", "--exitfirst", "tests" ]
+]
+
+[project.scripts]
+kat = "usher.server.__main__:main"
+keys = "usher.tracker.__main__:main"
+imports = "usher.deploys.__main__:main"
