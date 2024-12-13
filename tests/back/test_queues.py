@@ -1,6 +1,7 @@
 import asyncio
 import unittest
 
+from usher.back.messages import Message
 from usher.back.queues import UsherQueueSync as UsherQueue
 
 import pytest
@@ -17,7 +18,8 @@ class TestUsherQueue(unittest.TestCase):
     def test_assert_not_full(self):
         """Test that asserting a full queue does not raise an exception"""
         queue = UsherQueue()
-        queue.publish_sync({"issue_id": "ABC-123", "status": "in progress"})
+        message = Message("ABC-123", "in progress")
+        queue.publish_sync(message)
         queue.assert_full()
 
     def test_read_empty_queue(self):

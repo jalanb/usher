@@ -11,20 +11,21 @@ For this sake of this example we'll use a test class
 
 Once we have the queue we can put messages in it
 
->>> message = {"issue_id": "ABC-123", "status": "in progress"}
+>>> message = Message("ABC-123", "in progress")
 >>> queue.publish_sync(message)
 
 And then we can read messages back from it
 
 >>> message = queue.consume_sync()
 >>> assert message
->>> assert message["issue_id"] == "ABC-123"
->>> assert message["status"] == "in progress"
+>>> assert message.key == "ABC-123"
+>>> assert message.status == "in progress"
 """
 
 import asyncio
 import doctest
 
+from usher.back.messages import Message
 
 class UsherQueue(asyncio.Queue):
     """Provide an interface to allow
@@ -36,11 +37,11 @@ class UsherQueue(asyncio.Queue):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
-    async def publish(self, message: dict) -> None:
+    async def publish(self, message: Message) -> None:
         """Publish a message to the queue"""
         await self.put(message)
 
-    async def consume(self) -> dict:
+    async def consume(self) -> Message:
         """Consume a single message from the queue"""
         return await self.get()
 
@@ -51,7 +52,7 @@ class UsherQueueSync(UsherQueue):
     Allows synchronous access to the queue for testing
     """
 
-    def publish_sync(self, message: dict) -> None:
+    def publish_sync(self, message: Message) -> None:
         """Synchronous wrapper for publish"""
         asyncio.run(self.publish(message))
 
@@ -60,7 +61,7 @@ class UsherQueueSync(UsherQueue):
         if self.empty():
             raise asyncio.QueueEmpty
 
-    def consume_sync(self) -> dict:
+    def consume_sync(self) -> Message:
         """Synchronous wrapper for consume"""
         self.assert_full()
         return asyncio.run(self.consume())
