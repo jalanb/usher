@@ -1,0 +1,19 @@
+# Use a lightweight Python base image
+FROM python:3.11-slim
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy only the server source code and pyproject.toml
+COPY ./usher /app/usher
+COPY ./pyproject.toml /app
+
+# Install only the server dependencies
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir '.[server]'
+
+# Expose the server's port
+EXPOSE 8000
+
+# Set the default command to run the server
+CMD ["python", "-m", "usher.server"]

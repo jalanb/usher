@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  usher_server:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile.server
+    ports:
+      - "8000:8000"  # Expose port 8000 for the FastAPI server
+    networks:
+      - usher_network
+
+  usher_tracker:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile.tracker
+    depends_on:
+      - usher_server  # Ensure the server is started before the client
+    networks:
+      - usher_network
+
+  usher_deploy:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile.deploy
+    depends_on:
+      - usher_server  # Ensure the server is started before the client
+    networks:
+      - usher_network
+
+networks:
+  usher_network:
+    driver: bridge

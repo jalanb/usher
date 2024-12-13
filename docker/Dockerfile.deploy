@@ -1,0 +1,16 @@
+# Use a lightweight Python base image
+FROM python:3.11-slim
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy only the deploys source code and pyproject.toml
+COPY ./usher /app/usher
+COPY ./pyproject.toml /app
+
+# Install only the deploys dependencies
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir '.[deploys]'
+
+# Set the default command to run the deploys client
+CMD ["python", "-m", "usher.deploys", "--server-url", "http://localhost:8000"]
