@@ -154,13 +154,14 @@ commands = [
 [tool.tox.env.tests]
 deps = [".[test]"]
 commands = [
-    ["py.test", "--cov=usher", "tests" ]
+    ["py.test", "--cov=usher", "usher", "tests" ]
 ]
 
 [tool.tox.env.devs]
 deps = [".[develop]"]
 commands = [
-    ["py.test", "--exitfirst", "tests" ]
+    ["py.test", "--exitfirst", "usher", "tests" ]
+]
 ]
 
 [project.scripts]
