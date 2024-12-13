@@ -27,6 +27,7 @@ import doctest
 
 from usher.back.messages import Message
 
+
 class UsherQueue(asyncio.Queue):
     """Provide an interface to allow
 

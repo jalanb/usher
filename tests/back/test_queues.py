@@ -6,6 +6,7 @@ from usher.back.queues import UsherQueueSync as UsherQueue
 
 import pytest
 
+
 class TestUsherQueue(unittest.TestCase):
     """Test the UsherQueue class"""
 
