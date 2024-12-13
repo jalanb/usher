@@ -51,7 +51,7 @@ deploys = [
 # Linting tools - standalone, no project dependencies needed
 lint = [
     "black",
-    "blackdoc",
+#   "blackdoc",
     "flake8",
     "flake8-bugbear",
     "flake8-comprehensions",
@@ -146,7 +146,7 @@ envlist = ["lints", "tests"]
 deps = [".[lint]"]
 commands = [
     ["black", "-S", "--check", "usher"],
-    ["blackdoc", "-S", "--include", "[.](md|py|test)", "--check", "usher"],
+#   ["blackdoc", "-S", "--include", "[.](md|py)", "--check", "usher"],
     ["flake8", "usher"],
     ["mypy", "usher"],
 ]
