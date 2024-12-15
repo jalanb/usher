@@ -25,15 +25,14 @@ classifiers = [
 
 # Core dependencies
 dependencies = [
-    "pysyte",
+    "fastapi",
+    "uvicorn",
 ]
 
 [project.optional-dependencies]
 # Extras for server
 server = [
-    "fastapi",
     "usher",
-    "uvicorn",
 ]
 
 # Extras for trackers client
@@ -64,7 +63,6 @@ lint = [
 
 # Testing needs project + dependencies
 test = [
-    "usher",
     "callee",
     "codecov",
     "coverage",
@@ -74,6 +72,7 @@ test = [
     "pytest-cov",
     "pytest-docker",
     "tox",
+    "usher",
 ]
 
 # DevOps needs testing capabilities plus deployment tools
