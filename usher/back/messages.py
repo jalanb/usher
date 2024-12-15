@@ -9,14 +9,14 @@ A "message" is a item in the queue
 >>> assert message.status == "in progress"
 
 It conveniently also derives a project
-    Per Jira: the project is before the "-" in the key
 
 >>> assert message.project == "ABC"
 
-Less conveniently it raises an exception if there is no project in the key
+Less conveniently it raises an KeyError if there is no project in the issue key
+    Per Jira: a project is before an "-" in the key
 
 >>> try:
-...     Message("ABC", "in progress")
+...     Message("fred", "beta")
 ... except KeyError:
 ...     print("Fail")
 Fail
